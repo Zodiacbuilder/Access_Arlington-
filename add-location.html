@@ -47,12 +47,16 @@
                 <input type="text" class="form-control" id="name" required>
             </div>
             <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" id="address" required>
+            </div>
+            <div class="form-group">
                 <label for="latitude">Latitude</label>
-                <input type="number" class="form-control" id="latitude" step="any" required>
+                <input type="number" class="form-control" id="latitude" step="any" required readonly>
             </div>
             <div class="form-group">
                 <label for="longitude">Longitude</label>
-                <input type="number" class="form-control" id="longitude" step="any" required>
+                <input type="number" class="form-control" id="longitude" step="any" required readonly>
             </div>
             <div class="form-group">
                 <label for="info">Description</label>
@@ -60,10 +64,33 @@
             </div>
             <button type="submit" class="btn btn-primary">Add Location</button>
         </form>
+        <button id="getCoords" class="btn btn-secondary mt-2">Get Coordinates</button>
     </div>
 
     <!-- Script to handle form submission -->
     <script>
+        document.getElementById('getCoords').addEventListener('click', function() {
+            const address = document.getElementById('address').value;
+            const latInput = document.getElementById('latitude');
+            const lngInput = document.getElementById('longitude');
+
+            // Use Nominatim API to get coordinates from the address
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        latInput.value = data[0].lat;
+                        lngInput.value = data[0].lon;
+                    } else {
+                        alert('Address not found. Please try a different address.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    alert('An error occurred while fetching coordinates. Please try again.');
+                });
+        });
+
         document.getElementById('locationForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
