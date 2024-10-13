@@ -1,0 +1,99 @@
+
+
+.title{
+    color: white; text-align: center; font-family:Roboto;
+    border: black;
+    border-width: 2px;
+    font-size: 85px;
+    text-shadow: 
+                -1px -1px 0 black,  
+                 1px -1px 0 black,
+                -1px  1px 0 black,
+                 1px  1px 0 black; /* Creates the outline effect */
+    
+
+}
+
+h4{
+    text-align: center;
+    font-size: 35px;
+    color: white;
+    text-shadow: 
+                -1px -1px 0 black,  
+                 1px -1px 0 black,
+                -1px  1px 0 black,
+                 1px  1px 0 black; /* Creates the outline effect */
+}
+
+.rotating_images{
+    height:3450px ; 
+    width: 300px;
+    float: right; 
+    padding-right: 40px;
+}
+ 
+hr{
+    height:5px;
+    background: #000000d7;
+}
+body{
+    
+    background: linear-gradient(to right, #3A0B5A, #A05FB5);
+    overflow: hidden;
+    background: linear-gradient(270deg, #240B40, #6A0F8E, #A05FB5);
+    background-size: 300% 300%;
+    animation: gradientAnimation 10s ease infinite;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+    
+    
+
+
+
+
+.btn{
+    padding: 8px 20pxl;
+    width: 200px;
+    height: 50px;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 0;
+    text-transform:uppercase;
+    margin:25px;
+    overflow: hidden;
+    position: relative;
+    background-color: rgb(95, 54, 190);
+    padding-top: 70px;
+
+
+}
+
+.btn::before {
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+    120deg, transparent,
+    #00fffc, transparent);
+    transform: translateX(-100%);
+    transition: 0.6s;
+    position: absolute;
+}
+
+.btn:hover {
+    box-shadow: 0 0 20px 5px
+    rgb(5, 219, 219);
+}
