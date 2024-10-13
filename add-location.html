@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Location</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html">Access Arlington</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                More
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another Action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="map.html">Map</a>
+                <a class="dropdown-item" href="add-location.html">Add Location</a> <!-- Link to the new page -->
+              </div>
+            </li>
+          </ul>
+        </div>
+    </nav>
+
+    <!-- Form Section -->
+    <div class="container mt-4">
+        <h1 class="text-center">Add New Location</h1>
+        <form id="locationForm">
+            <div class="form-group">
+                <label for="name">Location Name</label>
+                <input type="text" class="form-control" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="latitude">Latitude</label>
+                <input type="number" class="form-control" id="latitude" step="any" required>
+            </div>
+            <div class="form-group">
+                <label for="longitude">Longitude</label>
+                <input type="number" class="form-control" id="longitude" step="any" required>
+            </div>
+            <div class="form-group">
+                <label for="info">Description</label>
+                <textarea class="form-control" id="info" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Location</button>
+        </form>
+    </div>
+
+    <!-- Script to handle form submission -->
+    <script>
+        document.getElementById('locationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const latitude = parseFloat(document.getElementById('latitude').value);
+            const longitude = parseFloat(document.getElementById('longitude').value);
+            const info = document.getElementById('info').value;
+
+            // Get existing locations from localStorage or create an empty array
+            const locations = JSON.parse(localStorage.getItem('locations')) || [];
+
+            // Add the new location to the array
+            locations.push({ lat: latitude, lng: longitude, name: name, info: info });
+
+            // Save updated locations back to localStorage
+            localStorage.setItem('locations', JSON.stringify(locations));
+
+            // Clear the form
+            document.getElementById('locationForm').reset();
+
+            // Optional: Redirect to the map page after adding the location
+            alert('Location added successfully! You can now check the map.');
+        });
+    </script>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Arlington Map</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Leaflet.js CSS for the map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    
+    <style>
+        #map {
+            height: 450px; /* Set height for the map */
+            border-radius: 10px; /* Optional: rounded corners */
+            margin: 20px 0; /* Space above and below the map */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html">Access Arlington</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another Action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="map.html">Map</a>
+                    <a class="dropdown-item" href="add-location.html">Add Location</a> <!-- Link to the new page -->
+                </div>
+            </li>            
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+    </nav>
+
+    <!-- Map Section -->
+    <div class="container mt-4">
+        <h1 class="text-center">Access Arlington Map</h1>
+        <p class="text-center lead">Find accessible locations in Arlington below:</p>
+
+        <!-- Map container -->
+        <div id="map"></div>
+    </div>
+
+    <!-- Leaflet.js JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map and set its view to Arlington, TX coordinates
+        var map = L.map('map').setView([32.7357, -97.1081], 13);  // Set to Arlington
+    
+        // Load OpenStreetMap tiles (free map provider)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    
+        // Add markers for accessible locations
+        var locations = [
+            { lat: 32.7365, lng: -97.1124, name: "Accessible Park", info: "Wheelchair ramps, accessible restrooms" },
+            { lat: 32.7311, lng: -97.1073, name: "Accessible Restaurant", info: "Braille menus, wheelchair access" },
+            { lat: 32.7332, lng: -97.1023, name: "Accessible Museum", info: "Audio guides, large print signage" }
+        ];
+    
+        // Load additional locations from localStorage
+        const storedLocations = JSON.parse(localStorage.getItem('locations')) || [];
+        locations = locations.concat(storedLocations); // Merge existing and new locations
+    
+        locations.forEach(function(location) {
+            L.marker([location.lat, location.lng])
+                .addTo(map)
+                .bindPopup('<strong>' + location.name + '</strong><br>' + location.info);
+        });
+    </script>
+    
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
